@@ -1,10 +1,3 @@
-/*************************************************************************
-	> File Name: server.c
-	> Author: suyelu
-	> Mail: suyelu@haizeix.com
-	> Created Time: 日  3/29 16:12:32 2020
- ************************************************************************/
-
 #include "../common/common.h"
 #include "../common/tcp_server.h"
 #include "../common/chatroom.h"

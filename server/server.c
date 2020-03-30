@@ -1,10 +1,3 @@
-/*************************************************************************
-	> File Name: server.c
-	> Author: suyelu
-	> Mail: suyelu@haizeix.com
-	> Created Time: 六  3/28 14:38:37 2020
- ************************************************************************/
-
 #include "head.h"
 #include "tcp_server.h"
 #define MAXCLIENT 150

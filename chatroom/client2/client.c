@@ -1,10 +1,3 @@
-/*************************************************************************
-	> File Name: client.c
-	> Author: suyelu
-	> Mail: suyelu@haizeix.com
-	> Created Time: 日  3/29 18:16:00 2020
- ************************************************************************/
-
 #include "../common/chatroom.h"
 #include "../common/tcp_client.h"
 #include "../common/common.h"

@@ -1,10 +1,3 @@
-/*************************************************************************
-	> File Name: chatroom.h
-	> Author: suyelu
-	> Mail: suyelu@haizeix.com
-	> Created Time: 日  3/29 16:26:37 2020
- ************************************************************************/
-
 #ifndef _CHATROOM_H
 #define _CHATROOM_H
 

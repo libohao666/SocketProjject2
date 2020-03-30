@@ -1,10 +1,3 @@
-/*************************************************************************
-	> File Name: server.c
-	> Author: suyelu
-	> Mail: suyelu@haizeix.com
-	> Created Time: Sun 22 Mar 2020 08:24:46 PM CST
- ************************************************************************/
-
 #include "head.h"
 int socket_create(int port) {
     int server_listen;

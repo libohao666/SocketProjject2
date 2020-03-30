@@ -1,10 +1,3 @@
-/*************************************************************************
-	> File Name: common.c
-	> Author: suyelu
-	> Mail: suyelu@haizeix.com
-	> Created Time: Sat 28 Mar 2020 08:41:00 PM CST
- ************************************************************************/
-
 #include "head.h"
 
 char *get_value(char *path, char *key) {

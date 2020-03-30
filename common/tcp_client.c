@@ -1,10 +1,3 @@
-/*************************************************************************
-	> File Name: client.c
-	> Author: suyelu
-	> Mail: suyelu@haizeix.com
-	> Created Time: 日  3/22 20:21:53 2020
- ************************************************************************/
-
 #include  "head.h"
 
 int socket_connect(char *host, int port) {
