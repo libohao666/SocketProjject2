@@ -14,4 +14,5 @@
 #include <sys/ioctl.h>
 #include <fcntl.h>
 #include <stdbool.h>
+#include <sys/stat.h>
 #endif

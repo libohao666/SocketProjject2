@@ -12,6 +12,27 @@ void *logout(int signalnum) {
     printf("recv a signal");
 }
 
+int send_file(char *filename, int sockfd) {
+    int fd_in, nread;
+	if ((fd_in = open(filename, O_RDONLY)) == -1) {
+        perror(filename);
+        return -1;
+    }
+    char buf[MAX_LINE];
+	
+	while ((nread = read(fd_in, buf, sizeof(buf))) > 0) {
+        int nwrite;
+        if ((nwrite = write(sockfd, buf, nread)) != nread) {
+            perror("write");
+            exit(1);
+        }
+        memset(buf, 0, sizeof(buf));
+    } 
+    write(sockfd, '\0', sizeof('\0'));
+    printf("end\n");
+    close(fd_in);
+    return 0;
+}
 
 int main() {
     system("clear");
@@ -73,7 +94,21 @@ int main() {
                 strncpy(msg.to, tmp + 1, len - 1);
                 msg.to[len - 1] = '\0';
             }
-            else {
+            else if (tmp[0] == '#' && tmp[1] == '2') {
+                strcpy(msg.message, tmp + len);
+                chat_send(msg, sockfd);
+                char filename[20] = {0};
+                for (int i = 0; i < strlen(msg.message); i++) {
+                    if (msg.message[i] == ' ') break;
+                    len++;
+                                                                               
+                }
+                strcpy(filename, msg.message + len + 1);
+                printf("filename:%s\n", filename);
+                send_file(filename, sockfd);
+                continue;
+            }
+            else{
                 msg.flag = 0;
             }
             strcpy(msg.message, tmp + len);
@@ -85,7 +120,7 @@ int main() {
         while(1) {
             rmsg = chat_recv(sockfd);
 			FILE *fp;
-			fp=fopen("./Log_File","a");//参数a表示追加写入
+			fp=fopen("./Log_File","a");
             fprintf(fp, BLUE"[%s]"NONE, rmsg.msg.from);
             if (rmsg.msg.flag == 1) {
                 fprintf(fp, "私聊 %s :%s\n", rmsg.msg.to, rmsg.msg.message);

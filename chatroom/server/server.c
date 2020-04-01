@@ -15,6 +15,28 @@ char *conf = "./server.conf";
 
 struct User *client;
 
+void recv_file(char *filename, int sockfd) {
+    char buf[MAX_LINE];
+    int fd_out;
+    int nread, nwrite;
+    
+    if ((fd_out = creat(filename, 0644)) == -1) {
+        perror(filename);
+        return ;
+    }
+    while ((nread = read(sockfd, buf, sizeof(buf))) > 0) {
+        int nwrite;
+        if ((nwrite = write(fd_out, buf, nread)) != nread) {
+            perror("write");
+            exit(1);
+        }
+        memset(buf, 0, sizeof(buf));
+        if (buf[nread] == '\0') break;
+    }
+    printf("end\n");
+    close(fd_out); 
+}
+
 
 void *work(void *arg){
     int sub = *(int *)arg;
@@ -30,7 +52,30 @@ void *work(void *arg){
             return NULL;
         }
         printf(BLUE"[%s]"NONE, rmsg.msg.from);
-        if (rmsg.msg.flag == 1) {
+        if (rmsg.msg.message[0] == '#') {
+            if (rmsg.msg.message[1] == '1') {
+                int i = 0;
+                i += sprintf(rmsg.msg.message + i, "在线名单如下:\n");
+                for (int j = 0; j < MAX_CLIENT; j++) {
+                    if (client[j].online)
+                    i += sprintf(rmsg.msg.message + i, "%s\n", client[j].name);
+                }
+                chat_send(rmsg.msg, client_fd);
+            }
+            else if (rmsg.msg.message[1] == '2') {
+                printf("收文件\n");
+				char filename[20] = {0};
+                int len = 0;
+                for (int i = 0; i < strlen(rmsg.msg.message); i++) {
+                    if (rmsg.msg.message[i] == ' ') break;
+                    len++;
+                }
+                strcpy(filename, rmsg.msg.message + len + 1);
+                printf("filename:%s\n", filename);
+                recv_file(filename, client_fd);
+            }
+        }
+        else if (rmsg.msg.flag == 1) {
             printf(RED"私聊"NONE" %s :%s\n", rmsg.msg.to, rmsg.msg.message);
             for (int i = 0; i < MAX_CLIENT; i++) {
                 if (client[i].online && !strcmp(rmsg.msg.to, client[i].name)) {

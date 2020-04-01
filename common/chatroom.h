@@ -36,4 +36,5 @@ struct RecvMsg chat_recv(int fd) {
 
 
 #define MAX_CLIENT 512
+#define MAX_LINE 1024
 #endif
